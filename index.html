@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Money Tracker</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Money Tracker</h1>
+            <nav>
+                <ul>
+                    <li><a href="#dashboard">Dashboard</a></li>
+                    <li><a href="#expenses">Expenses</a></li>
+                    <li><a href="#income">Income</a></li>
+                    <li><a href="#goals">Goals</a></li>
+                    <li><a href="#calendar">Calendar</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="section">
+                <div class="summary-cards">
+                    <div class="card">
+                        <h3>Monthly Balance</h3>
+                        <p class="balance">$<span id="monthlyBalance">0.00</span></p>
+                    </div>
+                    <div class="card">
+                        <h3>Monthly Income</h3>
+                        <p class="income">$<span id="monthlyIncome">0.00</span></p>
+                    </div>
+                    <div class="card">
+                        <h3>Monthly Expenses</h3>
+                        <p class="expenses">$<span id="monthlyExpenses">0.00</span></p>
+                    </div>
+                </div>
+
+                <div class="charts">
+                    <div class="chart-container">
+                        <h3>Expense Categories</h3>
+                        <canvas id="expenseChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Calendar Section - note the hidden class -->
+            <section id="calendar" class="section hidden" style="display: none;">
+                <h2>Monthly Calendar</h2>
+                <div class="calendar-controls">
+                    <button id="prevMonth">Previous</button>
+                    <h3 id="currentMonthYear">Month Year</h3>
+                    <button id="nextMonth">Next</button>
+                </div>
+                <div class="calendar-summary">
+                    <div class="summary-box">
+                        <h4>Total Income</h4>
+                        <p id="calendarIncome">$0.00</p>
+                    </div>
+                    <div class="summary-box">
+                        <h4>Total Expenses</h4>
+                        <p id="calendarExpenses">$0.00</p>
+                    </div>
+                    <div class="summary-box">
+                        <h4>Balance</h4>
+                        <p id="calendarBalance">$0.00</p>
+                    </div>
+                </div>
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <div>Sun</div>
+                        <div>Mon</div>
+                        <div>Tue</div>
+                        <div>Wed</div>
+                        <div>Thu</div>
+                        <div>Fri</div>
+                        <div>Sat</div>
+                    </div>
+                    <div id="calendarDays" class="calendar-days"></div>
+                </div>
+                <div id="dayDetails" class="day-details hidden">
+                    <h3>Daily Transactions</h3>
+                    <div id="dayTransactions"></div>
+                </div>
+            </section>
+
+            <!-- Expenses Section -->
+            <section id="expenses" class="section hidden">
+                <h2>Track Expenses</h2>
+                <form id="expenseForm">
+                    <div class="form-group">
+                        <label for="expenseAmount">Amount</label>
+                        <input type="number" id="expenseAmount" required step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label for="expenseCategory">Category</label>
+                        <select id="expenseCategory" required>
+                            <option value="food">Food</option>
+                            <option value="transport">Transport</option>
+                            <option value="utilities">Utilities</option>
+                            <option value="entertainment">Entertainment</option>
+                            <option value="education">Education</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="expenseDate">Date</label>
+                        <input type="date" id="expenseDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="expenseNote">Note</label>
+                        <input type="text" id="expenseNote">
+                    </div>
+                    <button type="submit">Add Expense</button>
+                </form>
+            </section>
+
+            <!-- Income Section -->
+            <section id="income" class="section hidden">
+                <h2>Track Income</h2>
+                <form id="incomeForm">
+                    <div class="form-group">
+                        <label for="incomeAmount">Amount</label>
+                        <input type="number" id="incomeAmount" required step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label for="incomeSource">Source</label>
+                        <select id="incomeSource" required>
+                            <option value="salary">Salary</option>
+                            <option value="freelance">Freelance</option>
+                            <option value="gifts">Gifts</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="incomeDate">Date</label>
+                        <input type="date" id="incomeDate" required>
+                    </div>
+                    <button type="submit">Add Income</button>
+                </form>
+            </section>
+
+            <!-- Goals Section -->
+            <section id="goals" class="section hidden">
+                <h2>Financial Goals</h2>
+                <form id="goalForm">
+                    <div class="form-group">
+                        <label for="goalName">Goal Name</label>
+                        <input type="text" id="goalName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="goalAmount">Target Amount</label>
+                        <input type="number" id="goalAmount" required step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label for="goalDeadline">Deadline</label>
+                        <input type="date" id="goalDeadline" required>
+                    </div>
+                    <button type="submit">Add Goal</button>
+                </form>
+                <div id="goalsList"></div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script src="js/tracker.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/goals.js"></script>
+    <script src="js/calendar.js"></script>
+</body>
+</html>
