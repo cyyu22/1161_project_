@@ -107,6 +107,7 @@ class CalendarManager {
         const expenses = JSON.parse(localStorage.getItem('expenses')) || [];
         const income = JSON.parse(localStorage.getItem('income')) || [];
 
+        // Exact string match for the date
         const dayExpenses = expenses
             .filter(exp => exp.date === dateStr)
             .reduce((sum, exp) => sum + exp.amount, 0);
@@ -171,19 +172,22 @@ class CalendarManager {
         const expenses = JSON.parse(localStorage.getItem('expenses')) || [];
         const income = JSON.parse(localStorage.getItem('income')) || [];
 
+        // Year and month for comparison
+        const year = this.currentDate.getFullYear();
+        const month = this.currentDate.getMonth();
+        
+        // Filter by checking the year and month components of each date
         const monthExpenses = expenses
             .filter(exp => {
-                const expDate = new Date(exp.date);
-                return expDate.getMonth() === this.currentDate.getMonth() &&
-                       expDate.getFullYear() === this.currentDate.getFullYear();
+                const expDate = new Date(exp.date + 'T00:00:00'); // Add time to avoid timezone issues
+                return expDate.getFullYear() === year && expDate.getMonth() === month;
             })
             .reduce((sum, exp) => sum + exp.amount, 0);
 
         const monthIncome = income
             .filter(inc => {
-                const incDate = new Date(inc.date);
-                return incDate.getMonth() === this.currentDate.getMonth() &&
-                       incDate.getFullYear() === this.currentDate.getFullYear();
+                const incDate = new Date(inc.date + 'T00:00:00'); // Add time to avoid timezone issues
+                return incDate.getFullYear() === year && incDate.getMonth() === month;
             })
             .reduce((sum, inc) => sum + inc.amount, 0);
 
