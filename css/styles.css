@@ -948,3 +948,89 @@ footer {
     width: 24px;
     text-align: center;
 }
+
+/* Quick Expense Section Styles */
+.quick-expense-section {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+}
+
+.quick-expense-form {
+    display: grid;
+    grid-template-columns: 2fr 2fr 3fr 1fr;
+    gap: 15px;
+    align-items: end;
+}
+
+.quick-expense-section h3 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+/* Daily Limit Section Styles */
+.daily-limit-section {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+}
+
+.limit-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.limit-header h3 {
+    color: var(--primary-color);
+    margin: 0;
+}
+
+#dailyLimitAmount {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.progress-container {
+    height: 10px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(to right, var(--primary-color), var(--primary-light));
+    border-radius: 5px;
+    transition: width 0.3s ease;
+}
+
+.progress-bar.warning {
+    background: linear-gradient(to right, #f39c12, #f1c40f);
+}
+
+.progress-bar.danger {
+    background: linear-gradient(to right, #e74c3c, #c0392b);
+}
+
+.limit-details {
+    display: flex;
+    justify-content: space-between;
+    color: #666;
+    font-size: 0.9em;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .quick-expense-form {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+}

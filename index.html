@@ -43,6 +43,44 @@
                     </div>
                 </div>
 
+                <div class="quick-expense-section">
+                    <h3>Quick Daily Expense</h3>
+                    <form id="quickExpenseForm" class="quick-expense-form">
+                        <div class="form-group">
+                            <input type="number" id="quickAmount" placeholder="Amount" required step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <select id="quickCategory" required>
+                                <option value="" disabled selected>Select Category</option>
+                                <option value="food">Food</option>
+                                <option value="transport">Transport</option>
+                                <option value="utilities">Utilities</option>
+                                <option value="entertainment">Entertainment</option>
+                                <option value="education">Education</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="quickNote" placeholder="Note (optional)">
+                        </div>
+                        <button type="submit">Add Expense</button>
+                    </form>
+                </div>
+
+                <div class="daily-limit-section">
+                    <div class="limit-header">
+                        <h3>Daily Spending Limit</h3>
+                        <span id="dailyLimitAmount">$50.00</span>
+                    </div>
+                    <div class="progress-container">
+                        <div id="dailyProgressBar" class="progress-bar"></div>
+                    </div>
+                    <div class="limit-details">
+                        <span>Today's Spending: $<span id="dailySpentAmount">0.00</span></span>
+                        <span>Remaining: $<span id="dailyRemainingAmount">50.00</span></span>
+                    </div>
+                </div>
+
                 <div class="settings-container">
                     <h3>Settings</h3>
                     <button id="resetDataBtn" class="danger-btn">Reset All Data</button>
@@ -355,6 +393,7 @@
     <script src="js/calendar.js"></script>
     <script src="js/settings.js"></script>
     <script src="js/reports.js"></script>
+    <script src="js/quickExpense.js"></script>
     <script>
     // Fix any scrolling issues that might cause green lines
     document.addEventListener('DOMContentLoaded', function() {

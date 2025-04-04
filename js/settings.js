@@ -84,9 +84,9 @@ class SettingsManager {
         
         const monthlyPercentage = (monthlyTotal / this.limits.monthly) * 100;
         
-        if (monthlyPercentage >= 100) {
+        if (monthlyTotal > this.limits.monthly) {
             this.showWarning(`You've exceeded your monthly spending limit of $${this.limits.monthly.toFixed(2)}!`);
-        } else if (monthlyPercentage >= 80) {
+        } else if (monthlyTotal > this.limits.monthly * 0.8) {
             this.showWarning(`You're approaching your monthly spending limit (${monthlyPercentage.toFixed(1)}%)!`);
         }
     }
@@ -129,9 +129,9 @@ class SettingsManager {
         const monthlyPercentage = Math.min((monthlyTotal / this.limits.monthly) * 100, 100);
         let progressClass = '';
         
-        if (monthlyPercentage >= 90) {
+        if (monthlyTotal > this.limits.monthly) {
             progressClass = 'danger';
-        } else if (monthlyPercentage >= 75) {
+        } else if (monthlyTotal > this.limits.monthly * 0.8) {
             progressClass = 'warning';
         }
         
@@ -184,6 +184,11 @@ class SettingsManager {
         localStorage.removeItem('expenses');
         localStorage.removeItem('income');
         localStorage.removeItem('goals');
+
+        // Reset daily spending tracker
+        if (window.quickExpenseManager) {
+            window.quickExpenseManager.resetDailyTracker();
+        }
 
         // Refresh dashboard and charts
         if (window.app) {
