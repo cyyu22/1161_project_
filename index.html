@@ -19,6 +19,8 @@
                     <li><a href="#income">Income</a></li>
                     <li><a href="#goals">Goals</a></li>
                     <li><a href="#calendar">Calendar</a></li>
+                    <li><a href="#reports">Reports</a></li>
+                    <li><a href="#settings">Settings</a></li>
                 </ul>
             </nav>
         </header>
@@ -39,6 +41,11 @@
                         <h3>Monthly Expenses</h3>
                         <p class="expenses">$<span id="monthlyExpenses">0.00</span></p>
                     </div>
+                </div>
+
+                <div class="settings-container">
+                    <h3>Settings</h3>
+                    <button id="resetDataBtn" class="danger-btn">Reset All Data</button>
                 </div>
 
                 <div class="charts">
@@ -165,7 +172,180 @@
                 </form>
                 <div id="goalsList"></div>
             </section>
+
+            <!-- Settings Section -->
+            <section id="settings" class="section hidden">
+                <h2>Settings</h2>
+                
+                <div class="settings-card">
+                    <h3>Expense Limits</h3>
+                    <form id="limitsForm">
+                        <div class="form-group">
+                            <label for="dailyLimit">Daily Spending Limit ($)</label>
+                            <input type="number" id="dailyLimit" min="1" step="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="monthlyLimit">Monthly Spending Limit ($)</label>
+                            <input type="number" id="monthlyLimit" min="1" step="1" required>
+                        </div>
+                        <button type="submit">Save Limits</button>
+                    </form>
+                </div>
+                
+                <div class="settings-card">
+                    <h3>Data Management</h3>
+                    <button id="resetDataBtn" class="danger-btn">Reset All Data</button>
+                </div>
+            </section>
+
+            <!-- Reports Section -->
+            <section id="reports" class="section hidden">
+                <h2>Financial Reports</h2>
+                
+                <div class="report-controls">
+                    <div class="form-group">
+                        <label for="reportMonth">Select Month</label>
+                        <input type="month" id="reportMonth" required>
+                    </div>
+                    <button id="generateReportBtn">Generate Report</button>
+                </div>
+                
+                <div id="reportPreview" class="report-preview hidden">
+                    <div class="report-actions">
+                        <button id="downloadPdfBtn" class="download-btn">
+                            <i class="fa fa-download"></i> Download PDF
+                        </button>
+                        <button id="downloadCsvBtn" class="download-btn">
+                            <i class="fa fa-table"></i> Download CSV
+                        </button>
+                    </div>
+                    
+                    <div id="reportContent" class="report-content">
+                        <div class="report-header">
+                            <h2>Monthly Financial Report</h2>
+                            <h3 id="reportPeriod">Month Year</h3>
+                        </div>
+                        
+                        <div class="report-summary">
+                            <div class="summary-item">
+                                <h4>Total Income</h4>
+                                <p id="reportIncome">$0.00</p>
+                            </div>
+                            <div class="summary-item">
+                                <h4>Total Expenses</h4>
+                                <p id="reportExpenses">$0.00</p>
+                            </div>
+                            <div class="summary-item">
+                                <h4>Balance</h4>
+                                <p id="reportBalance">$0.00</p>
+                            </div>
+                        </div>
+                        
+                        <div class="report-charts">
+                            <div class="chart-container-report">
+                                <h4>Expense Distribution</h4>
+                                <canvas id="reportExpenseChart"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="report-transactions">
+                            <h4>Income Transactions</h4>
+                            <table id="incomeTable" class="transaction-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Amount</th>
+                                        <th>Source</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="incomeTransactions"></tbody>
+                            </table>
+                            
+                            <h4>Expense Transactions</h4>
+                            <table id="expenseTable" class="transaction-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Amount</th>
+                                        <th>Category</th>
+                                        <th>Note</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="expenseTransactions"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- About Section -->
+            <section id="about" class="section hidden">
+                <h2>About Us</h2>
+                <div class="about-content">
+                    <div class="about-section">
+                        <h3>Who we are</h3>
+                        <p>We are a group of students currently studying at York University for the program Computer Science of Software Development located at the Markham campus. This is a collaborative project tht has been worked on by: Hojoon, Maurice, and Selim.</p>
+                    </div>
+                    <div class="about-section">
+                        <h3>Our Mission</h3>
+                        <p>We decided that in order to help individuals similar to us, we needed to create a financial assistance website. The website helps people who may be busy manage their finances easily by tracking costs, income, and lets the user sets cost limits that display warnings when the tracked costs approach the limit.</p>
+                    </div>
+                    
+                    <div class="about-section">
+                        <h3>Key Features</h3>
+                        <ul class="feature-list">
+                            <li>
+                                <i class="fas fa-chart-pie"></i>
+                                <span>Visual expense tracking with interactive charts</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>Monthly calendar view for transaction history</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-tasks"></i>
+                                <span>Goal setting and tracking</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-file-alt"></i>
+                                <span>Detailed financial reports</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-bell"></i>
+                                <span>Spending limit notifications</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="about-section">
+                        <h3>Contact</h3>
+                        <p>Have questions or suggestions? We'd love to hear from you!</p>
+                        <p>Email: support@moneytracker.com</p>
+                    </div>
+                </div>
+            </section>
         </main>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-section branding">
+                    <h4>Money Tracker</h4>
+                    <p>Track your finances with ease</p>
+                </div>
+                
+                <div class="footer-section more-info">
+                    <nav class="footer-nav">
+                        <ul>
+                            <li><a href="#about">About Us</a></li>
+                        </ul>
+                    </nav>
+                </div>
+
+                <div class="footer-section copyright">
+                    <p>&copy; 2024 Money Tracker</p>
+                </div>
+            </div>
+        </footer>
     </div>
 
     <script src="js/app.js"></script>
@@ -173,5 +353,31 @@
     <script src="js/charts.js"></script>
     <script src="js/goals.js"></script>
     <script src="js/calendar.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/reports.js"></script>
+    <script>
+    // Fix any scrolling issues that might cause green lines
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add extra padding to the bottom of the page
+        const mainElement = document.querySelector('main');
+        if (mainElement) {
+            const paddingBottom = window.getComputedStyle(mainElement).paddingBottom;
+            const currentPadding = parseInt(paddingBottom, 10) || 0;
+            mainElement.style.paddingBottom = (currentPadding + 20) + 'px';
+        }
+        
+        // Prevent any borders/lines showing during scrolling
+        window.addEventListener('scroll', function() {
+            const scrollPosition = window.scrollY;
+            const documentHeight = document.body.offsetHeight;
+            const windowHeight = window.innerHeight;
+            
+            // If we're near the bottom, add more padding
+            if (documentHeight - (scrollPosition + windowHeight) < 50) {
+                document.body.style.paddingBottom = '50px';
+            }
+        });
+    });
+    </script>
 </body>
 </html>
