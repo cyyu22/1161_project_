@@ -48,6 +48,11 @@ class TransactionTracker {
 
         // Show success message
         this.showMessage('Expense added successfully!');
+
+        // Check if we've exceeded limits
+        if (window.settingsManager) {
+            window.settingsManager.checkCurrentSpending();
+        }
     }
 
     addIncome() {
@@ -82,7 +87,7 @@ class TransactionTracker {
             monthly: 1500
         };
 
-        // Check daily limit
+        // Check daily limit - use exact string comparison for today
         const today = new Date().toISOString().split('T')[0];
         const dailyTotal = expenses
             .filter(exp => exp.date === today)
@@ -92,14 +97,15 @@ class TransactionTracker {
             this.showWarning(`Daily expenses (${dailyTotal.toFixed(2)}) are approaching limit (${limits.daily})!`);
         }
 
-        // Check monthly limit
-        const currentMonth = new Date().getMonth();
-        const currentYear = new Date().getFullYear();
+        // Check monthly limit - use year/month comparison
+        const currentDate = new Date();
+        const currentMonth = currentDate.getMonth();
+        const currentYear = currentDate.getFullYear();
+        
         const monthlyTotal = expenses
             .filter(exp => {
-                const expDate = new Date(exp.date);
-                return expDate.getMonth() === currentMonth && 
-                       expDate.getFullYear() === currentYear;
+                const expDate = new Date(exp.date + 'T00:00:00'); // Add time to avoid timezone issues
+                return expDate.getFullYear() === currentYear && expDate.getMonth() === currentMonth;
             })
             .reduce((sum, exp) => sum + exp.amount, 0);
 
