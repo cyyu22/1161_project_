@@ -58,13 +58,14 @@ class ChartManager {
 
         const expenses = JSON.parse(localStorage.getItem('expenses')) || [];
         
-        // Get current month's expenses
-        const currentMonth = new Date().getMonth();
-        const currentYear = new Date().getFullYear();
+        // Get current month's expenses using direct month/year comparison
+        const currentDate = new Date();
+        const currentMonth = currentDate.getMonth();
+        const currentYear = currentDate.getFullYear();
+        
         const monthlyExpenses = expenses.filter(expense => {
-            const expenseDate = new Date(expense.date);
-            return expenseDate.getMonth() === currentMonth && 
-                   expenseDate.getFullYear() === currentYear;
+            const expenseDate = new Date(expense.date + 'T00:00:00'); // Add time to avoid timezone issues
+            return expenseDate.getFullYear() === currentYear && expenseDate.getMonth() === currentMonth;
         });
 
         // Calculate totals by category
