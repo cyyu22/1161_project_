@@ -104,24 +104,49 @@ class MoneyTracker {
         this.expenses = JSON.parse(localStorage.getItem('expenses')) || [];
         this.income = JSON.parse(localStorage.getItem('income')) || [];
 
-        const currentMonth = new Date().getMonth();
-        const currentYear = new Date().getFullYear();
+        const currentDate = new Date();
+        const currentMonth = currentDate.getMonth();
+        const currentYear = currentDate.getFullYear();
 
-        // Calculate monthly totals
-        const monthlyIncome = this.calculateMonthlyTotal(this.income, currentMonth, currentYear);
-        const monthlyExpenses = this.calculateMonthlyTotal(this.expenses, currentMonth, currentYear);
+        // Calculate monthly totals using year/month comparison
+        const monthlyIncome = this.income
+            .filter(inc => {
+                const incDate = new Date(inc.date + 'T00:00:00'); // Add time to avoid timezone issues
+                return incDate.getFullYear() === currentYear && incDate.getMonth() === currentMonth;
+            })
+            .reduce((sum, inc) => sum + parseFloat(inc.amount), 0);
+
+        const monthlyExpenses = this.expenses
+            .filter(exp => {
+                const expDate = new Date(exp.date + 'T00:00:00'); // Add time to avoid timezone issues
+                return expDate.getFullYear() === currentYear && expDate.getMonth() === currentMonth;
+            })
+            .reduce((sum, exp) => sum + parseFloat(exp.amount), 0);
+
         const monthlyBalance = monthlyIncome - monthlyExpenses;
 
         // Update UI
         document.getElementById('monthlyIncome').textContent = monthlyIncome.toFixed(2);
         document.getElementById('monthlyExpenses').textContent = monthlyExpenses.toFixed(2);
         document.getElementById('monthlyBalance').textContent = monthlyBalance.toFixed(2);
+
+        // Update charts
+        if (window.chartManager) {
+            window.chartManager.updateCharts();
+        }
+
+        // Update the expense limit indicator if it exists
+        if (window.settingsManager) {
+            window.settingsManager.updateLimitIndicator();
+        }
     }
 
     calculateMonthlyTotal(transactions, month, year) {
         return transactions
             .filter(t => {
                 const date = new Date(t.date);
+                // JavaScript months are 0-based (0 = January, 1 = February, etc.)
+                // But our displayed months are 1-based 
                 return date.getMonth() === month && date.getFullYear() === year;
             })
             .reduce((sum, t) => sum + parseFloat(t.amount), 0);
